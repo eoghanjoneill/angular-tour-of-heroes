@@ -6,22 +6,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var Hero = (function () {
-    function Hero() {
-    }
-    return Hero;
-}());
-exports.Hero = Hero;
 var HEROES = [
     { id: 11, name: 'Hercules' },
     { id: 12, name: 'Aeneas' },
     { id: 13, name: 'Romulus' },
     { id: 14, name: 'Remus' },
-    { id: 15, name: 'Publius Scipio Affricanus the Elder' },
+    { id: 15, name: 'Publius Scipio Africanus the Elder' },
     { id: 16, name: 'Nero' },
     { id: 17, name: 'Venus' },
     { id: 18, name: 'Mars' },
-    { id: 19, name: 'Julius Caesaer' },
+    { id: 19, name: 'Julius Caesar' },
     { id: 20, name: 'Fionn MacChumhaill' },
 ];
 var AppComponent = (function () {
@@ -33,6 +27,9 @@ var AppComponent = (function () {
         };
         this.heroes = HEROES;
     }
+    AppComponent.prototype.onSelect = function (hero) {
+        this.selectedHero = hero;
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
