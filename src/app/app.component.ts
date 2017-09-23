@@ -1,34 +1,16 @@
-import { Component } from '@angular/core';
-import { Hero } from './hero';
-
-const HEROES: Hero[] = [
-  { id: 11, name: 'Hercules'},
-  { id: 12, name: 'Aeneas'},
-  { id: 13, name: 'Romulus'},
-  { id: 14, name: 'Remus'},
-  { id: 15, name: 'Publius Scipio Africanus the Elder'},
-  { id: 16, name: 'Nero'},
-  { id: 17, name: 'Venus'},
-  { id: 18, name: 'Mars'},
-  { id: 19, name: 'Julius Caesar'},
-  { id: 20, name: 'Fionn MacChumhaill'},
-];
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'my-app',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "my-app",
+  template: `
+  <h1>{{title}}</h1>
+  <nav>
+    <a routerLink="/heroes">Heroes</a>
+    <a routerLink="/dashboard">Dashboard</a>
+  </nav>
+  <router-outlet></router-outlet>
+  `
 })
-
-export class AppComponent  {
+export class AppComponent {
   title = 'Tour of Heroes';
-  selectedHero: Hero;
-  hero: Hero = {
-    id: 1,
-    name: 'Windstorm'
-  };  
-  heroes = HEROES;
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-  }
 }
