@@ -28,4 +28,4 @@ AppRoutingModule = __decorate([
     })
 ], AppRoutingModule);
 exports.AppRoutingModule = AppRoutingModule;
-//# sourceMappingURL=app-routing.component.js.map
+//# sourceMappingURL=app-routing.module.js.map
