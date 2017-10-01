@@ -18,25 +18,21 @@ var HeroService = (function () {
         this.eoghanHeroesUrl = 'http://localhost:3999/toDoLists/HeroArrayTest';
     }
     HeroService.prototype.getHeroes = function () {
-        return this.http.get(this.heroesUrl)
+        var _this = this;
+        return this.http.get(this.eoghanHeroesUrl)
             .toPromise()
             .then(function (response) { return response.json().data; })
-            .catch(this.handleError);
-        /*return this.http.get(this.eoghanHeroesUrl)
+            .catch(function (error) {
+            console.error('An error occurred', error);
+            return _this.http.get(_this.heroesUrl)
                 .toPromise()
-                .then(res => res.json().heroes as Hero[])
-                .catch(this.handleError);*/
-        /*
-        reason => {
-          this.http.get(this.heroesUrl)
-            .toPromise()
-            .then(res => res.json().data as Hero[])
-            .catch(this.handleError);
-        }*/
-    };
-    HeroService.prototype.handleError = function (error) {
-        console.error('An error occurred', error);
-        return Promise.reject(error.message || error);
+                .then(function (res) { return res.json().data; })
+                .catch(function (err2) {
+                console.error('Error getting from mock api', err2);
+                return Promise.reject(err2.message || err2);
+            });
+            //return Promise.reject(error.message || error);
+        });
     };
     HeroService.prototype.getHeroesSlowly = function () {
         var _this = this;
