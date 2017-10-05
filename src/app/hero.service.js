@@ -16,6 +16,7 @@ var HeroService = (function () {
         this.http = http;
         this.heroesUrl = 'api/heroes';
         this.eoghanHeroesUrl = 'http://localhost:3999/toDoLists/HeroArrayTest';
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
     HeroService.prototype.getHeroes = function () {
         var _this = this;
@@ -24,14 +25,14 @@ var HeroService = (function () {
             .then(function (response) { return response.json().data; })
             .catch(function (error) {
             console.error('An error occurred', error);
-            return _this.http.get(_this.heroesUrl)
-                .toPromise()
+        })
+            .then(function (res) {
+            return _this.http.get(_this.heroesUrl).toPromise()
                 .then(function (res) { return res.json().data; })
                 .catch(function (err2) {
                 console.error('Error getting from mock api', err2);
                 return Promise.reject(err2.message || err2);
             });
-            //return Promise.reject(error.message || error);
         });
     };
     HeroService.prototype.getHeroesSlowly = function () {
@@ -41,7 +42,24 @@ var HeroService = (function () {
         });
     };
     HeroService.prototype.getHero = function (id) {
-        return this.getHeroes().then(function (heroes) { return heroes.find(function (hero) { return hero.id === id; }); });
+        //return this.getHeroes().then(heroes => heroes.find(hero => hero.id === id));
+        var url = this.heroesUrl + "/" + id;
+        return this.http.get(url)
+            .toPromise()
+            .then(function (res) { return res.json().data; })
+            .catch(this.handleError);
+    };
+    HeroService.prototype.handleError = function (error) {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
+    };
+    HeroService.prototype.update = function (hero) {
+        var url = this.heroesUrl + "/" + hero.id;
+        return this.http
+            .put(url, JSON.stringify(hero), { headers: this.headers })
+            .toPromise()
+            .then(function () { return hero; })
+            .catch(this.handleError);
     };
     return HeroService;
 }());
