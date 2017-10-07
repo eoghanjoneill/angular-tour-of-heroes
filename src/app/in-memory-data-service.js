@@ -1,5 +1,6 @@
 "use strict";
-var InMemoryDataService = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var InMemoryDataService = /** @class */ (function () {
     function InMemoryDataService() {
     }
     InMemoryDataService.prototype.createDb = function () {

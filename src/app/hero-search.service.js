@@ -10,25 +10,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var hero_service_1 = require("./hero.service");
-var DashboardComponent = /** @class */ (function () {
-    function DashboardComponent(heroService) {
-        this.heroService = heroService;
-        this.heroes = [];
+var http_1 = require("@angular/http");
+require("rxjs/add/operator/map");
+var HeroSearchService = /** @class */ (function () {
+    function HeroSearchService(http) {
+        this.http = http;
     }
-    DashboardComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.heroService.getHeroes().then(function (heroes) { return _this.heroes = heroes.slice(0, 4); });
+    HeroSearchService.prototype.search = function (term) {
+        return this.http
+            .get("api/heroes/?name=" + term)
+            .map(function (response) { return response.json().data; });
     };
-    DashboardComponent = __decorate([
-        core_1.Component({
-            selector: 'dashboard',
-            templateUrl: './dashboard.component.html',
-            styleUrls: ['./dashboard.component.css']
-        }),
-        __metadata("design:paramtypes", [hero_service_1.HeroService])
-    ], DashboardComponent);
-    return DashboardComponent;
+    HeroSearchService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.Http])
+    ], HeroSearchService);
+    return HeroSearchService;
 }());
-exports.DashboardComponent = DashboardComponent;
-//# sourceMappingURL=dashboard.component.js.map
+exports.HeroSearchService = HeroSearchService;
+//# sourceMappingURL=hero-search.service.js.map
