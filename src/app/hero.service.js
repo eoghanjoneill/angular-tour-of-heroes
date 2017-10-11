@@ -23,17 +23,27 @@ var HeroService = /** @class */ (function () {
         var _this = this;
         return this.http.get(this.eoghanHeroesUrl)
             .toPromise()
-            .then(function (response) { return response.json().data; })
+            .then(function (response) {
+            return response.json().heroes;
+        })
             .catch(function (error) {
             console.error('An error occurred', error);
         })
-            .then(function (res) {
-            return _this.http.get(_this.heroesUrl).toPromise()
-                .then(function (res) { return res.json().data; })
-                .catch(function (err2) {
-                console.error('Error getting from mock api', err2);
-                return Promise.reject(err2.message || err2);
-            });
+            .then(function (something) {
+            if (something) {
+                console.log("We got back " + something.length + " heroes!");
+                return something;
+            }
+            else {
+                return _this.http.get(_this.heroesUrl).toPromise()
+                    .then(function (res) {
+                    return res.json().data;
+                });
+            }
+        })
+            .catch(function (err2) {
+            console.error('Error getting from mock api', err2);
+            return Promise.reject(err2.message || err2);
         });
     };
     HeroService.prototype.getHeroesSlowly = function () {

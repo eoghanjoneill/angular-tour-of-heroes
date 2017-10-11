@@ -13,20 +13,29 @@ export class HeroService {
 
   getHeroes(): Promise<Hero[]> {
     return this.http.get(this.eoghanHeroesUrl)
-             .toPromise()
-             .then(response => response.json().data as Hero[])
-             .catch(error => {
-                console.error('An error occurred', error);                
+              .toPromise()
+              .then(response => {
+                return response.json().heroes as Hero[]
+              })              
+              .catch(error => {
+                  console.error('An error occurred', error);                           
               })
-              .then(res => {
-                return this.http.get(this.heroesUrl).toPromise()
-                  .then(res => res.json().data as Hero[])
-                  .catch(err2 => {
-                    console.error('Error getting from mock api', err2);
-                    return Promise.reject(err2.message || err2);
-                  });
-                }
-              );   
+              .then((something) => {
+                  if(something) {//check if it is an array
+                    console.log(`We got back ${(<Hero[]>something).length} heroes!`);
+                    return something;
+                  }
+                  else {               
+                    return this.http.get(this.heroesUrl).toPromise()
+                      .then(res => {
+                        return res.json().data as Hero[];
+                      });                      
+                  }
+              })
+              .catch(err2 => {
+                console.error('Error getting from mock api', err2);
+                return Promise.reject(err2.message || err2);
+              });
   }
     
 
